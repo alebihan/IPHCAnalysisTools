@@ -2,8 +2,8 @@ include make.inc
 #################################################
 ### Defining Compiling variables              ###
 #################################################
-
-CXX           = g++ -Wno-deprecated -Wall
+#-Wno-parentheses
+CXX           = c++ -Wno-deprecated -Wall -std=c++0x
 #-m32  -Wno-deprecated
 LD            = g++ -Wno-deprecated -Wall
 #-m32  -Wno-deprecated 
@@ -49,6 +49,10 @@ TARGETS       =	Ntuple_Controller \
 		ReferenceScaleFactors \
 		rochcor2012jan22 \
 		Objects \
+		PUReweight \
+		ScaleFactor \
+		tauTrigSFreader \
+		DataMCCorrections \
 		UncertaintyValue
 
 CINTTARGETS = 
@@ -76,7 +80,7 @@ ifdef USE_SVfit
 endif
 
 ifdef USE_cherepanov
-	TARGETS += MyTest NtupleValidation
+	TARGETS += MyTest ZTauHTauH SingleMuSkim ZTauMuTauH TTBar
 	DEFS += -DUSE_cherepanov=1
 endif
 
@@ -87,9 +91,16 @@ ifdef USE_goe
 endif
 
 ifdef USE_lebihan
+	TARGETS += ZTauHTauH HelicityTemplate
+	DEFS += -DUSE_lebihan=1
+endif
+
+ifdef USE_gbourgat
 	TARGETS += 
 	DEFS += -DUSE_lebihan=1
 endif
+
+
 
 HDRS          = $(TARGETS:=.h) 		
 SRCS          = $(TARGETS:=.cxx)  Analysis.cxx
@@ -117,6 +128,12 @@ ifdef USE_lebihan
 	vpath %.cxx lebihan
 	vpath %.h lebihan
 endif
+
+ifdef USE_gbourgat
+	vpath %.cxx gbourgat
+	vpath %.h gbourgat
+endif
+
 vpath %.cxx CommonFiles
 vpath %.h CommonFiles
 

@@ -6,6 +6,14 @@
 #ifdef USE_cherepanov
 #include "cherepanov/MyTest.h"
 #include "cherepanov/NtupleValidation.h"
+#include "cherepanov/SkimmingNtuples.h"
+#include "cherepanov/ControlSample.h"
+#include "cherepanov/SkimNtupleDiTauHTrigger.h"
+#include "cherepanov/ZTauHTauH.h"
+#include "cherepanov/SingleMuSkim.h"
+#include "cherepanov/ZTauMuTauH.h"
+#include "cherepanov/TTBar.h"
+
 #endif
 
 #ifdef USE_goe
@@ -13,8 +21,18 @@
 #endif
 
 #ifdef USE_lebihan
+#include "lebihan/ZTauHTauH.h"
+#include "lebihan/HelicityTemplate.h"
 
 #endif
+
+#ifdef USE_gbourgat
+
+#endif
+
+
+
+
 // #ifdef USE_<username>
 
 // #endif
@@ -36,15 +54,26 @@ Selection_Base* Selection_Factory::Factory(TString Analysis, TString UncertType,
   else if(Analysis.Contains("tauspin"))s=new TauSpinExample(Analysis,UncertType);
 #ifdef USE_cherepanov
   else if(Analysis.Contains("mytest"))s=new MyTest(Analysis,UncertType);
-  else if(Analysis.Contains("ntuplevalidation"))s=new NtupleValidation(Analysis,UncertType);
+  else if(Analysis.Contains("ztauhtauh"))s=new ZTauHTauH(Analysis,UncertType);
+  else if(Analysis.Contains("singlemuskim"))s=new SingleMuSkim(Analysis,UncertType);
+  else if(Analysis.Contains("ztaumutauh"))s=new ZTauMuTauH(Analysis,UncertType);
+  else if(Analysis.Contains("ttbar"))s=new TTBar(Analysis,UncertType);
+
+
+
 #endif
 // #ifdef USE_goe
 //   else if(Analysis.Contains("bla"))s=new Bla(Analysis,UncertType);
 // #endif
 
-// #ifdef USE_lebihan
-//   else if(Analysis.Contains("bla"))s=new Bla(Analysis,UncertType);
-// #endif
+ #ifdef USE_lebihan
+   else if(Analysis.Contains("ztauhtauh"))s=new ZTauHTauH(Analysis,UncertType);
+   else if(Analysis.Contains("helicitytemplate"))s=new HelicityTemplate(Analysis,UncertType);
+ #endif
+
+ // #ifdef USE_gbourgat
+ //   else if(Analysis.Contains("bla"))s=new Bla(Analysis,UncertType);
+ // #endif
 
 
   else{
